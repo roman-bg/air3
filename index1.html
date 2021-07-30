@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1.0">
 <link rel="icon" type="image/x-icon" href="favicon.ico" />
-<title>Съдържание на формалдехид във въздуха (mg/m3) на територията на град Велико Търново</title>
+<title>Съдържание на формалдехиди във въздуха на град Велико Търново.</title>
 
  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
@@ -26,7 +26,7 @@ public broker and topic you can use for testing.
 */
 
 //settings BEGIN
-	var MQTTbroker = 'spirulina.cc';
+	var MQTTbroker = 'agrosens.xyz';
 	var MQTTport = 8883;
 	var MQTTsubTopic = 'plant/air'; //works with wildcard # and + topics dynamically now
 //settings END
@@ -131,10 +131,10 @@ public broker and topic you can use for testing.
 	    chart = new Highcharts.Chart({
 	        chart: {
 	            renderTo: 'container',
-	            defaultSeriesType: 'line'
+	            defaultSeriesType: 'spline'
 	        },
 	        title: {
-	            text: 'Съдържание на формалдехид във въздуха (mg/m3)'
+	            text: 'Съдържание на формалдехиди във въздуха'
 	        },
 	        
 	        xAxis: {
@@ -146,7 +146,7 @@ public broker and topic you can use for testing.
 	            minPadding: 0.2,
 	            maxPadding: 0.2,
 	            title: {
-	                text: 'mg/m3',
+	                text: 'µg/m3',
 	                margin: 80
 	            }
 	        },
@@ -167,8 +167,7 @@ public broker and topic you can use for testing.
   <h2></h2>
   <!-- Trigger the modal with a button -->
   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Инфо</button>
-  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal2">Абонамент</button>
-
+ 
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -177,12 +176,13 @@ public broker and topic you can use for testing.
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Относно проекта</h4>
+          <h4 class="modal-title">Съдържание на формалдехиди във въздуха</h4>
         </div>
         <div class="modal-body">
-             <p align="justify">Формалдехидът (наричан също метанал) е химическо съединение, газ с остра миризма. Той е най-простият алдехид. Общата химическа формула е H2CO. За първи път е синтезиран от руския химик Александър Бутлеров през 1859 г., но е окончателно идентифициран от Аугуст Вилхелм фон Хофман през 1867 г. </p>
+         <p align="justify">Формалдехидът (наричан също метанал) е химическо съединение, газ с остра миризма. Той е най-простият алдехид. Общата химическа формула е H2CO. За първи път е синтезиран от руския химик Александър Бутлеров през 1859 г., но е окончателно идентифициран от Аугуст Вилхелм фон Хофман през 1867 г. </p>
           <p align="justify">Формалдехидът се получава направо от непълно горене на материали, съдържащи въглерод. Присъства в дима от горските пожари, в изгорелите газове на автомобилите и в тютюневия дим. В земната атмосфера формалдехидът се получава от въздействието на слънчевата светлина и кислорода върху атмосферния метан и други въглеводороди. Малки количества формалдехид се получават като страничен продукт от обмяната на веществата в повечето организми, включително и човека. </p>
        <p align="justify">Формалдехидът е канцерогенен и токсичен, вредата от него е доказана и е включен в списъка на опасни за здравето на човека вещества от Светованата здравна организация. Постоянният контакт с него може да предизвика рак у хората. Настоящият проект визуализира в реално време нивата на формалдехид във въздуха в близост до завода на Кроношпан в град Велико Търново. Целта му е да сигнализира живущите в града за потенциално превишаване на неговото съдържание във въздуха, който дишаме. Ако желаете всекидневно да получавате справка относно нивото на формалдехид във въздуха с разбивка на всеки половин час, можете да се абонирате за това използвайки формата абонамент.</p>
+  
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Затвори</button>
@@ -191,7 +191,26 @@ public broker and topic you can use for testing.
       
     </div>
   </div>
- 
+  <div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Форма за абонамент</h4>
+        </div>
+        <div class="modal-body">
+         <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfopFSBx2OARJLFk5VwCOJqK0kYV67WDM3pmEG5eQT7fjEvPg/viewform?embedded=true" width="580" height="460" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+       
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Затвори</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
   
    <div class="modal fade" id="myModal2" role="dialog">
     <div class="modal-dialog">
@@ -200,11 +219,11 @@ public broker and topic you can use for testing.
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Можете да подкрепите проекта като направите дарение</h4>
+          <h4 class="modal-title">Карта на покритие</h4>
         </div>
         <div class="modal-body">
-       <p align="justify">Тук можете да се абонирате за всекидневно получаване на данни относно нивото на формалдехид във въздуха с разбивка на всеки половин час.</p>
-      <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfopFSBx2OARJLFk5VwCOJqK0kYV67WDM3pmEG5eQT7fjEvPg/viewform?embedded=true" width="580" height="560" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+        
+        <img src="dd.png" alt="Girl in a jacket" width="560" height="500"> 
         </div>
         <div class="modal-footer">
           <button type="button" class="btn btn-default" data-dismiss="modal">Затвори</button>
