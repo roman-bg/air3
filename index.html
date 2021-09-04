@@ -22,11 +22,6 @@
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 <link href="lightbox.css" rel="stylesheet" />
 <style type="text/css">
-.replace-me { 
-   color:green; 
-   text-decoration:underline; 
-   cursor:pointer; 
-   }
 @media only screen and (orientation:portrait) {
   body {
     height: 100vw;
@@ -189,8 +184,7 @@ public broker and topic you can use for testing.
 <body onload="init();"><!--Start the javascript ball rolling and connect to the mqtt broker-->
 
 <div class="container">
-  <h2><p>По идея на местната организация на <span class="replace-me" onclick="window.open('https://www.zelenite.bg')">ПП Зелено движение<span style="display:none">,Зелената партия на България</span></span></p></h2>
-  <!-- Trigger the modal with a button -->
+  <!-- Trigger the modal with a button --><br>
   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Инфо</button>
   <a href="pm25.html"><button type="button" class="btn btn-info btn-lg" >PM.25</button></a>
   <!-- Modal -->
@@ -209,7 +203,7 @@ public broker and topic you can use for testing.
           <p align="center"><b>Допустими норми за съдържание на финни прахови частици PM10 (μg/m3)а</b></p>
          
           <a class="example-image-link" href="image-1.png" data-lightbox="example-1" data-lightbox="eple-1xam"><img src="image-1.png" alt="image-1" width="390" height="130" class="center"></a>
-       <p align="justify">Настоящият проект е разработен от<b> Българската асоциация по биологична растителна защита </b>за да визуализира в реално време съдържание на финни прахови частици PM10 и PM2.5 (μg/m3) във въздуха в близост до завода на Кроношпан в град Велико Търново. Целта му е да сигнализира живущите в града за потенциално превишаване на тяхното съдържание във въздуха който дишаме. За коментари и мнения можете да се свържете с нас като ни пишете на email: <a href = "mailto: info@air3.xyz">info@air3.xyz</a> </p>
+       <p align="justify">Настоящият проект е разработен от<b> Българската асоциация по биологична растителна защита </b>за да визуализира в реално време съдържание на финни прахови частици PM10 (μg/m3) във въздуха в близост до завода на Кроношпан в град Велико Търново. Целта му е да сигнализира живущите в града за потенциално превишаване на тяхното съдържание във въздуха който дишаме. За коментари и мнения можете да се свържете с нас като ни пишете на email: <a href = "mailto: info@air3.xyz">info@air3.xyz</a> </p>
   
         </div>
         <div class="modal-footer">
@@ -267,21 +261,6 @@ public broker and topic you can use for testing.
 
 
 </div><!-- this the placeholder for the chart-->
-<script src="replaceme.min.js"></script><script>
-var replace = new ReplaceMe(document.querySelector('.replace-me'), {
-animation: 'animated fadeIn',                       // Animation class or classes
-    speed: 4000,                                        // Delay between each phrase in miliseconds
-    separator: ',',                                     // Phrases separator
-    hoverStop: false,                                   // Stop rotator on phrase hover
-    clickChange: false,                                 // Change phrase on click
-    loopCount: 'infinite',                              // Loop Count - 'infinite' or number
-    autoRun: true,                                      // Run rotator automatically
-    onInit: false,                                      // Function
-    onChange: false,                                    // Function
-    onComplete: false                                   // Function
-});
-    
-</script>
 
 
 	</body>
