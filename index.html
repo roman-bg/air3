@@ -4,7 +4,7 @@
 <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1.0">
 <link rel="icon" type="image/x-icon" href="favicon.ico" />
-<title>Съдържание на финни прахови частици PM10 (μg/m3) във въздуха в района на "Кроношпан" - Велико Търново.</title>
+<title>Съдържание на финни прахови частици PM10 и PM2.5 (μg/m3) във въздуха в района на "Кроношпан" - Велико Търново.</title>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-2DNRZMQJDZ"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -17,8 +17,8 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
 <link rel="stylesheet" href="img.css">
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="lightbox.js"></script>
 <script src="mqttws31.js" type="text/javascript"></script>
-<script src="lightbox.js"></script>
 <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
 <link href="lightbox.css" rel="stylesheet" />
 <style type="text/css">
@@ -185,7 +185,7 @@ public broker and topic you can use for testing.
   <h2><p>По идея на местната организация на <span class="replace-me" onclick="window.open('https://www.zelenite.bg')">ПП Зелено движение<span style="display:none">,Зелената партия на България</span></span></p></h2>
   <!-- Trigger the modal with a button -->
   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Инфо</button>
- 
+  <a href="pm25.html"><button type="button" class="btn btn-info btn-lg" >PM.25</button></a>
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -194,13 +194,14 @@ public broker and topic you can use for testing.
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Съдържание на финни прахови частици PM10 (μg/m3) във въздуха</h4>
+          <h4 class="modal-title">Съдържание на финни прахови частици PM10 и PM2.5 (μg/m3) във въздуха</h4>
         </div>
         <div class="modal-body">
          <p align="justify">PM10 това са частици от различни вещества с диаметър 10 и по-малко микрона, а PM2.5 са с размер 2.5 и по-малко микрона. Като цяло последните се описват като тънкодисперсни частици. За сравнение, дебелинета на човешкия косъм е около 100 микрона. Частиците с такъв размер представляват по-голямата част от прахта и могат да попаднат дълбоко в белите дробове на човека. </p>
           <p align="justify">Химическият състав на този вид прах присъстващ в атмосферата на големите градове може да бъде различен и зависи от множество фактори, като близост до пътища, строежи, различни производства. По последните научни данни не съществува минимален праг на замърсяване с тънкодисперсни частици, който да не оказва влияние върху човешкото здраве.</p>
           <p align="center"><b>Допустими норми за съдържание на финни прахови частици PM10 (μg/m3)а</b></p>
-           <a class="example-image-link" href="image-1.png" data-lightbox="example-1" data-lightbox="eple-1xam"><img src="image-1.png" alt="Smiley face" width="390" height="130" class="center"></a>
+         
+          <a class="example-image-link" href="image-1.png" data-lightbox="example-1" data-lightbox="eple-1xam"><img src="image-1.png" alt="Smiley face" width="390" height="130" class="center"></a>
        <p align="justify">Настоящият проект е разработен от<b> Българската асоциация по биологична растителна защита </b>за да визуализира в реално време съдържание на финни прахови частици PM10 (μg/m3) във въздуха в близост до завода на Кроношпан в град Велико Търново. Целта му е да сигнализира живущите в града за потенциално превишаване на тяхното съдържание във въздуха който дишаме. За коментари и мнения можете да се свържете с нас като ни пишете на email: <a href = "mailto: info@air3.xyz">info@air3.xyz</a> </p>
   
         </div>
@@ -274,5 +275,7 @@ animation: 'animated fadeIn',                       // Animation class or classe
 });
     
 </script>
+
+
 	</body>
 </html>
