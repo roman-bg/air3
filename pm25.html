@@ -27,13 +27,6 @@
    text-decoration:underline; 
    cursor:pointer; 
    }
-@media only screen and (orientation:portrait) {
-  body {
-    height: 100vw;
-    transform: rotate(90deg);
-  }
-}
-
 </style>
 <script type="text/javascript">
 /*
@@ -189,8 +182,7 @@ public broker and topic you can use for testing.
 <body onload="init();"><!--Start the javascript ball rolling and connect to the mqtt broker-->
 
 <div class="container">
-  <h2><p>По идея на местната организация на <span class="replace-me" onclick="window.open('https://www.zelenite.bg')">ПП Зелено движение<span style="display:none">,Зелената партия на България</span></span></p></h2>
-  <!-- Trigger the modal with a button -->
+</br>  <!-- Trigger the modal with a button -->
   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Инфо</button>
   <a href="index.html"><button type="button" class="btn btn-info btn-lg" >PM10</button></a>
   <!-- Modal -->
@@ -267,23 +259,7 @@ public broker and topic you can use for testing.
 
 
 </div><!-- this the placeholder for the chart-->
-<script src="replaceme.min.js"></script><script>
-var replace = new ReplaceMe(document.querySelector('.replace-me'), {
-animation: 'animated fadeIn',                       // Animation class or classes
-    speed: 4000,                                        // Delay between each phrase in miliseconds
-    separator: ',',                                     // Phrases separator
-    hoverStop: false,                                   // Stop rotator on phrase hover
-    clickChange: false,                                 // Change phrase on click
-    loopCount: 'infinite',                              // Loop Count - 'infinite' or number
-    autoRun: true,                                      // Run rotator automatically
-    onInit: false,                                      // Function
-    onChange: false,                                    // Function
-    onComplete: false                                   // Function
-});
-    
-</script>
 
 
 	</body>
 </html>
-
