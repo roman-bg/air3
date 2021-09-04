@@ -1,1 +1,282 @@
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+ <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1.0">
+<link rel="icon" type="image/x-icon" href="favicon.ico" />
+<title>Съдържание на финни прахови частици PM2.5 (μg/m3) във въздуха в района на "Кроношпан" - Велико Търново.</title>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-2DNRZMQJDZ"></script>
+<script>
+  window.dataLayer = window.dataLayer || [];
+  function gtag(){dataLayer.push(arguments);}
+  gtag('js', new Date());
+
+  gtag('config', 'G-2DNRZMQJDZ');
+</script>
+ <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" href="img.css">
+  <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+  <script src="lightbox.js"></script>
+<script src="mqttws31.js" type="text/javascript"></script>
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+<link href="lightbox.css" rel="stylesheet" />
+<style type="text/css">
+.replace-me { 
+   color:green; 
+   text-decoration:underline; 
+   cursor:pointer; 
+   }
+</style>
+<script type="text/javascript">
+/*
+by @bordignon on twitter
+Feb 2014
+
+Simple example of plotting live mqtt/websockets data using highcharts.
+
+public broker and topic you can use for testing.
+
+	var MQTTbroker = 'broker.mqttdashboard.com';
+	var MQTTport = 8000;
+	var MQTTsubTopic = 'dcsquare/cubes/#'; //works with wildcard # and + topics dynamically now
+
+*/
+
+//settings BEGIN
+	var MQTTbroker = 'agrosens.xyz';
+	var MQTTport = 8883;
+	var MQTTsubTopic = 'air/dust'; //works with wildcard # and + topics dynamically now
+//settings END
+
+	var chart; // global variuable for chart
+	var dataTopics = new Array();
+
+//mqtt broker 
+	var client = new Paho.MQTT.Client(MQTTbroker, MQTTport,
+				"myclientid_" + parseInt(Math.random() * 100, 10));
+	client.onMessageArrived = onMessageArrived;
+	client.onConnectionLost = onConnectionLost;
+	//connect to broker is at the bottom of the init() function !!!!
+	
+
+//mqtt connecton options including the mqtt broker subscriptions
+	var options = {
+		timeout: 3,
+		onSuccess: function () {
+			console.log("mqtt connected");
+			// Connection succeeded; subscribe to our topics
+			client.subscribe(MQTTsubTopic, {qos: 1});
+		},
+		onFailure: function (message) {
+			console.log("Connection failed, ERROR: " + message.errorMessage);
+			//window.setTimeout(location.reload(),20000); //wait 20seconds before trying to connect again.
+		}
+	};
+
+//can be used to reconnect on connection lost
+	function onConnectionLost(responseObject) {
+		console.log("connection lost: " + responseObject.errorMessage);
+		//window.setTimeout(location.reload(),20000); //wait 20seconds before trying to connect again.
+	};
+
+//what is done when a message arrives from the broker
+	function onMessageArrived(message) {
+		console.log(message.destinationName, '',message.payloadString);
+
+		//check if it is a new topic, if not add it to the array
+		if (dataTopics.indexOf(message.destinationName) < 0){
+		    
+		    dataTopics.push(message.destinationName); //add new topic to array
+		    var y = dataTopics.indexOf(message.destinationName); //get the index no
+		    
+		    //create new data series for the chart
+			var newseries = {
+		            id: y,
+		            name: message.destinationName,
+		            data: []
+		            };
+
+			chart.addSeries(newseries); //add the series
+		    
+		    };
+		 
+		var y = dataTopics.indexOf(message.destinationName); //get the index no of the topic from the array
+		var myEpoch = new Date().getTime(); //get current epoch time
+		var thenum = message.payloadString.replace( /^\D+/g, ''); //remove any text spaces from the message
+		var plotMqtt = [myEpoch, Number(thenum)]; //create the array
+		if (isNumber(thenum)) { //check if it is a real number and not text
+			console.log('is a propper number, will send to chart.')
+			plot(plotMqtt, y);	//send it to the plot function
+		};
+	};
+
+//check if a real number	
+	function isNumber(n) {
+	  return !isNaN(parseFloat(n)) && isFinite(n);
+	};
+
+//function that is called once the document has loaded
+	function init() {
+
+		//i find i have to set this to false if i have trouble with timezones.
+		Highcharts.setOptions({
+			global: {
+				useUTC: false
+			}
+		});
+
+		// Connect to MQTT broker
+		client.connect(options);
+
+	};
+
+
+//this adds the plots to the chart	
+    function plot(point, chartno) {
+    	console.log(point);
+    	
+	        var series = chart.series[0],
+	            shift = series.data.length > 20; // shift if the series is 
+	                                             // longer than 20
+	        // add the point
+	        chart.series[chartno].addPoint(point, true, shift);  
+
+	};
+
+//settings for the chart
+	$(document).ready(function() {
+	    chart = new Highcharts.Chart({
+	        chart: {
+	            renderTo: 'container',
+	            defaultSeriesType: 'spline'
+	        },
+	        title: {
+	            text: 'Съдържание на финни прахови частици PM2.5 (μg/m3) във въздуха'
+	        },
+	        
+	        xAxis: {
+	            type: 'datetime',
+	            tickPixelInterval: 150,
+	            maxZoom: 20 * 1000
+	        },
+	        yAxis: {
+	            minPadding: 0.2,
+	            maxPadding: 0.2,
+	            title: {
+	                text: 'μg/m3',
+	                margin: 80
+	            }
+	        },
+	        series: []
+	    });        
+	});
+
+</script>
+
+<script src="http://code.highcharts.com/stock/highstock.js"></script>
+
+
+</head>
+
+<body onload="init();"><!--Start the javascript ball rolling and connect to the mqtt broker-->
+
+<div class="container">
+  <h2><p>По идея на местната организация на <span class="replace-me" onclick="window.open('https://www.zelenite.bg')">ПП Зелено движение<span style="display:none">,Зелената партия на България</span></span></p></h2>
+  <!-- Trigger the modal with a button -->
+  <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Инфо</button>
+  <a href="index.html"><button type="button" class="btn btn-info btn-lg" >PM10</button></a>
+  <!-- Modal -->
+  <div class="modal fade" id="myModal" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Съдържание на финни прахови частици PM2.5 и PM10 (μg/m3) във въздуха</h4>
+        </div>
+        <div class="modal-body">
+         <p align="justify">PM10 това са частици от различни вещества с диаметър 10 и по-малко микрона, а PM2.5 са с размер 2.5 и по-малко микрона. Като цяло последните се описват като тънкодисперсни частици. За сравнение, дебелинета на човешкия косъм е около 100 микрона. Частиците с такъв размер представляват по-голямата част от прахта и могат да попаднат дълбоко в белите дробове на човека. </p>
+          <p align="justify">Химическият състав на този вид прах присъстващ в атмосферата на големите градове може да бъде различен и зависи от множество фактори, като близост до пътища, строежи, различни производства. По последните научни данни не съществува минимален праг на замърсяване с тънкодисперсни частици, който да не оказва влияние върху човешкото здраве.</p>
+          <p align="center"><b>Допустими норми за съдържание на финни прахови частици PM10 (μg/m3)а</b></p>
+         
+          <a class="example-image-link" href="image-1.png" data-lightbox="example-1" data-lightbox="eple-1xam"><img src="image-1.png" alt="Smiley face" width="390" height="130" class="center"></a>
+       <p align="justify">Настоящият проект е разработен от<b> Българската асоциация по биологична растителна защита </b>за да визуализира в реално време съдържание на финни прахови частици PM10 (μg/m3) във въздуха в близост до завода на Кроношпан в град Велико Търново. Целта му е да сигнализира живущите в града за потенциално превишаване на тяхното съдържание във въздуха който дишаме. За коментари и мнения можете да се свържете с нас като ни пишете на email: <a href = "mailto: info@air3.xyz">info@air3.xyz</a> </p>
+  
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Затвори</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  <div class="modal fade" id="myModal1" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Форма за абонамент</h4>
+        </div>
+        <div class="modal-body">
+         <iframe src="https://docs.google.com/forms/d/e/1FAIpQLSfopFSBx2OARJLFk5VwCOJqK0kYV67WDM3pmEG5eQT7fjEvPg/viewform?embedded=true" width="580" height="460" frameborder="0" marginheight="0" marginwidth="0">Loading…</iframe>
+       
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Затвори</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+  
+   <div class="modal fade" id="myModal2" role="dialog">
+    <div class="modal-dialog">
+    
+      <!-- Modal content-->
+      <div class="modal-content">
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal">&times;</button>
+          <h4 class="modal-title">Карта на покритие</h4>
+        </div>
+        <div class="modal-body">
+        
+        <img src="dd.png" alt="Girl in a jacket" width="560" height="500"> 
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Затвори</button>
+        </div>
+      </div>
+      
+    </div>
+  </div>
+
+</div>
+
+<div id="container" style="height: 500px; min-width: 500px">
+
+
+</div><!-- this the placeholder for the chart-->
+<script src="replaceme.min.js"></script><script>
+var replace = new ReplaceMe(document.querySelector('.replace-me'), {
+animation: 'animated fadeIn',                       // Animation class or classes
+    speed: 4000,                                        // Delay between each phrase in miliseconds
+    separator: ',',                                     // Phrases separator
+    hoverStop: false,                                   // Stop rotator on phrase hover
+    clickChange: false,                                 // Change phrase on click
+    loopCount: 'infinite',                              // Loop Count - 'infinite' or number
+    autoRun: true,                                      // Run rotator automatically
+    onInit: false,                                      // Function
+    onChange: false,                                    // Function
+    onComplete: false                                   // Function
+});
+    
+</script>
+
+
+	</body>
+</html>
 
