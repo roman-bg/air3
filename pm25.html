@@ -1,10 +1,10 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
-<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
  <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1, maximum-scale=1.0">
+ <meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
 <link rel="icon" type="image/x-icon" href="favicon.ico" />
-<title>Съдържание на финни прахови частици PM2.5 (μg/m3) във въздуха в района на "Кроношпан" - Велико Търново.</title>
+<title>Индекс за качеството на въздуха в град  Велико Търново визуализиран в реално време.</title>
 <script async src="https://www.googletagmanager.com/gtag/js?id=G-2DNRZMQJDZ"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
@@ -28,6 +28,7 @@
     transform: rotate(90deg);
   }
 }
+
 </style>
 <script type="text/javascript">
 /*
@@ -47,7 +48,7 @@ public broker and topic you can use for testing.
 //settings BEGIN
 	var MQTTbroker = 'spirulina.cc';
 	var MQTTport = 9393;
-	var MQTTsubTopic = 'air/dust'; //works with wildcard # and + topics dynamically now
+	var MQTTsubTopic = 'dust/pm25'; //works with wildcard # and + topics dynamically now
 //settings END
 
 	var chart; // global variuable for chart
@@ -153,9 +154,13 @@ public broker and topic you can use for testing.
 	            defaultSeriesType: 'spline'
 	        },
 	        title: {
-	            text: 'Съдържание на финни прахови частици PM2.5 (μg/m3) във въздуха'
+	            text: 'Индекс за качеството на въздуха'
 	        },
-	        
+	        plotOptions: {
+  spline: {
+    lineColor: 'orange'
+  }
+},
 	        xAxis: {
 	            type: 'datetime',
 	            tickPixelInterval: 150,
@@ -183,9 +188,9 @@ public broker and topic you can use for testing.
 <body onload="init();"><!--Start the javascript ball rolling and connect to the mqtt broker-->
 
 <div class="container">
-</br>  <!-- Trigger the modal with a button -->
+  <!-- Trigger the modal with a button --><br>
   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Инфо</button>
-  <a href="index.html"><button type="button" class="btn btn-info btn-lg" >PM10</button></a>
+   <a href="index.html"><button type="button" class="btn btn-info btn-lg" >PM10</button></a>
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
@@ -194,15 +199,17 @@ public broker and topic you can use for testing.
       <div class="modal-content">
         <div class="modal-header">
           <button type="button" class="close" data-dismiss="modal">&times;</button>
-          <h4 class="modal-title">Съдържание на финни прахови частици PM2.5 и PM10 (μg/m3) във въздуха</h4>
+        
+          <h4 class="modal-title">Индекс за качеството на въздуха</h4>
         </div>
         <div class="modal-body">
          <p align="justify">PM10 това са частици от различни вещества с диаметър 10 и по-малко микрона, а PM2.5 са с размер 2.5 и по-малко микрона. Като цяло последните се описват като тънкодисперсни частици. За сравнение, дебелинета на човешкия косъм е около 100 микрона. Частиците с такъв размер представляват по-голямата част от прахта и могат да попаднат дълбоко в белите дробове на човека. </p>
-          <p align="justify">Химическият състав на този вид прах присъстващ в атмосферата на големите градове може да бъде различен и зависи от множество фактори, като близост до пътища, строежи, различни производства. По последните научни данни не съществува минимален праг на замърсяване с тънкодисперсни частици, който да не оказва влияние върху човешкото здраве.</p>
-          <p align="center"><b>Допустими норми за съдържание на финни прахови частици PM10 (μg/m3)а</b></p>
+          <p align="justify">Целта на индекса за качеството на въздуха (AQI) е да информира обществеността колко замърсен е въздухът в момента или колко замърсен се очаква да стане. Замервайки съдържанието на PM10 и PM2.5 прахови частици ние го изчисляваме за град Велико Търново използвайки формулата:</p>
+           <img src="aqi.png" alt="AQI" class="center" width="209" height="38"> 
+          <p align="center"><b>Индекс за качеството на въздуха (скала)</b></p>
          
-          <a class="example-image-link" href="image-1.png" data-lightbox="example-1" data-lightbox="eple-1xam"><img src="image-1.png" alt="Smiley face" width="390" height="130" class="center"></a>
-       <p align="justify">Настоящият проект е разработен от<b> Българската асоциация по биологична растителна защита </b>за да визуализира в реално време съдържание на финни прахови частици PM10 (μg/m3) във въздуха в близост до завода на Кроношпан в град Велико Търново. Целта му е да сигнализира живущите в града за потенциално превишаване на тяхното съдържание във въздуха който дишаме. За коментари и мнения можете да се свържете с нас като ни пишете на email: <a href = "mailto: info@air3.xyz">info@air3.xyz</a> </p>
+          <a class="example-image-link" href="tab.png" data-lightbox="example-1" data-lightbox="eple-1xam"><img src="tab.png" alt="image-1" width="390" height="130" class="center"></a>
+       <p align="justify">Настоящият проект е разработен от<b> Българската асоциация по биологична растителна защита </b>за да визуализира в реално време индекса за качество на въздуха в град Велико Търново. Целта му е да сигнализира живущите в града за потенциално превишаване на тяхното съдържание във въздуха който дишаме. За коментари и мнения можете да се свържете с нас като ни пишете на email: <a href = "mailto: info@air3.xyz">info@air3.xyz</a> </p>
   
         </div>
         <div class="modal-footer">
