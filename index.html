@@ -48,7 +48,8 @@ public broker and topic you can use for testing.
 //settings BEGIN
 	var MQTTbroker = 'spirulina.cc';
 	var MQTTport = 9393;
-	var MQTTsubTopic = 'dust/vt'; //works with wildcard # and + topics dynamically now
+	var MQTTsubTopic = 'dust/pm10'; //works with wildcard # and + topics dynamically now
+	var MQTTsubTopic1 = 'dust/pm25';
 //settings END
 
 	var chart; // global variuable for chart
@@ -69,6 +70,7 @@ public broker and topic you can use for testing.
 			console.log("mqtt connected");
 			// Connection succeeded; subscribe to our topics
 			client.subscribe(MQTTsubTopic, {qos: 1});
+			client.subscribe(MQTTsubTopic1, {qos: 1});
 		},
 		onFailure: function (message) {
 			console.log("Connection failed, ERROR: " + message.errorMessage);
@@ -151,16 +153,12 @@ public broker and topic you can use for testing.
 	    chart = new Highcharts.Chart({
 	        chart: {
 	            renderTo: 'container',
-	            defaultSeriesType: 'spline'
+	            defaultSeriesType: 'line'
 	        },
 	        title: {
-	            text: 'Индекс за качеството на въздуха'
+	            text: 'Индекс за качеството на въздуха (PM10 и PM2.5)'
 	        },
-	        plotOptions: {
-  spline: {
-    lineColor: 'orange'
-  }
-},
+	        
 	        xAxis: {
 	            type: 'datetime',
 	            tickPixelInterval: 150,
@@ -170,7 +168,7 @@ public broker and topic you can use for testing.
 	            minPadding: 0.2,
 	            maxPadding: 0.2,
 	            title: {
-	                text: 'AQI',
+	                text: 'μg/m3',
 	                margin: 80
 	            }
 	        },
@@ -190,7 +188,7 @@ public broker and topic you can use for testing.
 <div class="container">
   <!-- Trigger the modal with a button --><br>
   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Инфо</button>
-   <a href="pm25.html"><button type="button" class="btn btn-info btn-lg" >PM2.5</button></a>
+
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
     <div class="modal-dialog">
