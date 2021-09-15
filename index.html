@@ -29,6 +29,95 @@
   }
 }
 
+
+
+
+
+.highcharts-color-0 {
+  fill: red;
+  stroke: black;
+}
+
+.highcharts-color-1 {
+   fill: #808A9F;
+  stroke: #808A9F;
+}
+
+
+.highcharts-background {
+  fill: #ffffff;
+}
+.highcharts-title {
+  fill: #fff;
+  font-weight: 300;
+}
+
+
+.highcharts-axis text {
+  fill: #aaa;
+}
+
+.highcharts-axis-labels text {
+  fill: #000000;
+}
+
+
+/* AXES & GRID */
+.highcharts-xaxis path {
+  stroke: #444;
+}
+
+.highcharts-grid path {
+  stroke: #444;
+  stroke-dasharray: 1 1;
+}
+
+.highcharts-graph {
+    fill: none;
+    stroke-width: 2;
+    stroke-linecap: round;
+    stroke-linejoin: round;
+}
+.highcharts-point {
+    stroke-width: 1px;
+}
+.highcharts-legend .highcharts-point {
+    stroke-width: 1;
+}
+.highcharts-data-label {
+    font-size: 0.9em;
+    font-weight: bold;
+}
+
+.highcharts-legend-box {
+    fill: none;
+    stroke-width: 0;
+}
+.highcharts-legend-item text {
+    fill: #E0E0E3;
+    font-weight: bold;
+    cursor: pointer;
+    stroke-width: 0;
+}
+.highcharts-legend-item:hover text {
+    fill: #fff;
+}
+.highcharts-legend-item-hidden * {
+    fill: #cccccc !important;
+    stroke: #cccccc !important;
+    transition: fill 250ms;
+}
+.highcharts-legend-nav-active {
+    fill: #274b6d;
+    cursor: pointer;
+}
+.highcharts-legend-nav-inactive {
+    fill: #c0c0c0;
+}
+.highcharts-legend-title-box {
+    fill: none;
+    stroke-width: 0;
+}
 </style>
 <script type="text/javascript">
 /*
@@ -158,7 +247,11 @@ public broker and topic you can use for testing.
 	        title: {
 	            text: 'Индекс за качеството на въздуха (PM10 и PM2.5)'
 	        },
-	        
+	         plotOptions: {
+  line: {
+    lineColor: 'orange'
+  }
+  },
 	        xAxis: {
 	            type: 'datetime',
 	            tickPixelInterval: 150,
@@ -206,7 +299,7 @@ public broker and topic you can use for testing.
            <img src="aqi.png" alt="AQI" class="center" width="209" height="38"> 
           <p align="center"><b>Индекс за качеството на въздуха (скала)</b></p>
          
-          <a class="example-image-link" href="aqi1.png" data-lightbox="example-1" data-lightbox="eple-1xam"><img src="aqi1.png" alt="image-1" width="390" height="130" class="center"></a>
+          <a class="example-image-link" href="tab.png" data-lightbox="example-1" data-lightbox="eple-1xam"><img src="tab.png" alt="image-1" width="390" height="130" class="center"></a>
        <p align="justify">Настоящият проект е разработен от<b> Българската асоциация по биологична растителна защита </b>за да визуализира в реално време индекса за качество на въздуха в град Велико Търново. Целта му е да сигнализира живущите в града за потенциално превишаване на тяхното съдържание във въздуха който дишаме. За коментари и мнения можете да се свържете с нас като ни пишете на email: <a href = "mailto: info@air3.xyz">info@air3.xyz</a> </p>
   
         </div>
