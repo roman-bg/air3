@@ -138,7 +138,7 @@ public broker and topic you can use for testing.
 	var MQTTbroker = 'spirulina.cc';
 	var MQTTport = 9393;
 	var MQTTsubTopic = 'dust/pm10'; //works with wildcard # and + topics dynamically now
-	var MQTTsubTopic1 = 'dust/pm25';
+	
 //settings END
 
 	var chart; // global variuable for chart
@@ -159,7 +159,7 @@ public broker and topic you can use for testing.
 			console.log("mqtt connected");
 			// Connection succeeded; subscribe to our topics
 			client.subscribe(MQTTsubTopic, {qos: 1});
-			client.subscribe(MQTTsubTopic1, {qos: 1});
+                    
 		},
 		onFailure: function (message) {
 			console.log("Connection failed, ERROR: " + message.errorMessage);
