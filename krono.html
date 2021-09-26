@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+
+      <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta http-equiv="Content-Security-Policy" content="upgrade-insecure-requests">
+<meta http-equiv="refresh" content="10">
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+<link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.5.2/animate.min.css">
+ <link rel="shortcut icon" href="../assets/favicon.ico" type="image/x-icon">
+<link rel="icon" href="../assets/favicon.ico" type="image/x-icon">
+<head>
+  <title>Замърсяване с финни прахови частици в района на "Кроношпан"</title>
+  <script src="./assets/paho-mqtt.js"></script>
+  <script src="./assets/util.js"></script>
+
+  <style>
+h2 {text-align: center;}
+p {text-align: center;}
+div {text-align: center;}
+
+body {
+  background: #ffffff;
+}
+.hidden {
+  opacity:0;
+}
+.console-container {
+ 
+  font-family:Khula;
+  font-size:16px;
+  text-align:center;
+  height:200px;
+  width:600px;
+  display:block;
+  position:absolute;
+  color:black;
+  top:0;
+  bottom:0;
+  left:0;
+  right:0;
+  margin:auto;
+}
+.console-underscore {
+   display:inline-block;
+  position:relative;
+  top:-0.14em;
+  left:10px;
+}
+button {
+ top : 40px;
+left : 100px;
+position: absolute;
+}
+@media only screen and (orientation:portrait) {
+  body {
+    height: 100vw;
+    transform: rotate(90deg);
+  }
+}
+</style>
+</head>
+</head>
+<body>
+ <button type="button" class="btn btn-info btn-lg" onclick="window.location.href='index1.html';">Назад към индекса</button>
+<div class='console-container'><span id='text'></span><div class='console-underscore' id='console'>&#95;</div>
+ 
+<h2>ФПЧ в района на "Кроношпан"</h2>
+<p><b>PM10(µg/m3)</b><p>
+<p id="demo" style="color:black; font-size:160%;"><b></b></p></div>
+</body>
+</html>
+<script>
+// Create a client instance
+var client = new Paho.Client(mqtt.hostname, Number(mqtt.port), "sub-client-id");
+
+// set callback handlers
+client.onConnectionLost = onConnectionLost;
+client.onMessageArrived = onMessageArrived;
+
+// connect the client
+console.log("attempting to connect...")
+client.connect({onSuccess:onConnect, useSSL: true});
+
+// called when the client connects
+function onConnect() {
+  // Once a connection has been made, make a subscription and send a message.
+  console.log("onConnect");
+  client.subscribe(topic_name);
+}
+</script>
