@@ -27,12 +27,6 @@
     height: 100vw;
     transform: rotate(90deg);
   }
-}
-
-
-
-
-
 .highcharts-color-0 {
   fill: red;
   stroke: black;
@@ -43,80 +37,41 @@
   stroke: #808A9F;
 }
 
-
-.highcharts-background {
-  fill: #ffffff;
-}
-.highcharts-title {
-  fill: #fff;
-  font-weight: 300;
-}
-
-
-.highcharts-axis text {
-  fill: #aaa;
-}
-
-.highcharts-axis-labels text {
-  fill: #000000;
-}
-
-
-/* AXES & GRID */
-.highcharts-xaxis path {
-  stroke: #444;
-}
-
-.highcharts-grid path {
-  stroke: #444;
-  stroke-dasharray: 1 1;
-}
-
-.highcharts-graph {
-    fill: none;
-    stroke-width: 2;
-    stroke-linecap: round;
-    stroke-linejoin: round;
-}
 .highcharts-point {
-    stroke-width: 1px;
+    stroke-width: 2px;
 }
-.highcharts-legend .highcharts-point {
-    stroke-width: 1;
-}
-.highcharts-data-label {
-    font-size: 0.9em;
-    font-weight: bold;
+.highcharts-figure, .highcharts-data-table table {
+    min-width: 310px; 
+    max-width: 800px;
+    margin: 1em auto;
 }
 
-.highcharts-legend-box {
-    fill: none;
-    stroke-width: 0;
+.highcharts-data-table table {
+	font-family: Verdana, sans-serif;
+	border-collapse: collapse;
+	border: 1px solid #EBEBEB;
+	margin: 10px auto;
+	text-align: center;
+	width: 100%;
+	max-width: 500px;
 }
-.highcharts-legend-item text {
-    fill: #E0E0E3;
-    font-weight: bold;
-    cursor: pointer;
-    stroke-width: 0;
+.highcharts-data-table caption {
+    padding: 1em 0;
+    font-size: 1.2em;
+    color: #555;
 }
-.highcharts-legend-item:hover text {
-    fill: #fff;
+.highcharts-data-table th {
+	font-weight: 600;
+    padding: 0.5em;
 }
-.highcharts-legend-item-hidden * {
-    fill: #cccccc !important;
-    stroke: #cccccc !important;
-    transition: fill 250ms;
+.highcharts-data-table td, .highcharts-data-table th, .highcharts-data-table caption {
+    padding: 0.5em;
 }
-.highcharts-legend-nav-active {
-    fill: #274b6d;
-    cursor: pointer;
+.highcharts-data-table thead tr, .highcharts-data-table tr:nth-child(even) {
+    background: #f8f8f8;
 }
-.highcharts-legend-nav-inactive {
-    fill: #c0c0c0;
-}
-.highcharts-legend-title-box {
-    fill: none;
-    stroke-width: 0;
+.highcharts-data-table tr:hover {
+    background: #f1f7ff;
 }
 </style>
 <script type="text/javascript">
@@ -138,7 +93,6 @@ public broker and topic you can use for testing.
 	var MQTTbroker = 'spirulina.cc';
 	var MQTTport = 9393;
 	var MQTTsubTopic = 'dust/pm10'; //works with wildcard # and + topics dynamically now
-	
 //settings END
 
 	var chart; // global variuable for chart
@@ -159,7 +113,6 @@ public broker and topic you can use for testing.
 			console.log("mqtt connected");
 			// Connection succeeded; subscribe to our topics
 			client.subscribe(MQTTsubTopic, {qos: 1});
-                    
 		},
 		onFailure: function (message) {
 			console.log("Connection failed, ERROR: " + message.errorMessage);
@@ -242,16 +195,17 @@ public broker and topic you can use for testing.
 	    chart = new Highcharts.Chart({
 	        chart: {
 	            renderTo: 'container',
-	            defaultSeriesType: 'line'
+	            //defaultSeriesType: 'spline'
+	            type: 'spline',
+	            scrollablePlotArea: {
+            minWidth: 600,
+            scrollPositionX: 1
+            }
 	        },
 	        title: {
-	            text: 'Индекс за качеството на въздуха (PM10 и PM2.5)'
+	            text: 'Индекс за качеството на въздуха'
 	        },
-	         plotOptions: {
-  line: {
-    lineColor: 'orange'
-  }
-  },
+	       
 	        xAxis: {
 	            type: 'datetime',
 	            tickPixelInterval: 150,
@@ -263,9 +217,112 @@ public broker and topic you can use for testing.
 	            title: {
 	                text: 'AQI',
 	                margin: 80
-	            }
+	            },
+	            minorGridLineWidth: 0,
+        gridLineWidth: 0,
+        alternateGridColor: null,
+	            plotBands: [{ // Light air
+            from: 0,
+            to: 50,
+            color: 'green',
+            label: {
+                text: 'Добро',
+                style: {
+                    color: '#000000',
+                    fontSize: '24px',
+                    textOutline: '2px'
+                  
+                  
+                }
+            }
+            },
+            { // Light breeze
+            from: 51,
+            to: 100,
+            color: 'yellow',
+            label: {
+                text: 'Задоволително',
+                style: {
+                    color: '#000000',
+                    fontSize: '24px',
+                    textOutline: '2px'
+                }
+            }
+        },
+         { // Light breeze
+            from: 101,
+            to: 150,
+            color: 'orange',
+            label: {
+                text: 'Нездравословно за чууствителни',
+                style: {
+                    color: '#000000',
+                    fontSize: '24px',
+                    textOutline: '2px'
+                }
+            }
+        },
+        { // Light breeze
+            from: 151,
+            to: 200,
+            color: 'red',
+            label: {
+                text: 'Нездравословно',
+                style: {
+                    color: '#000000',
+                    fontSize: '24px',
+                    textOutline: '2px'
+                }
+            }
+        },
+        { // Light breeze
+            from: 201,
+            to: 300,
+            color: 'purple',
+            label: {
+                text: 'Много нездравословно',
+                style: {
+                    color: '#000000',
+                    fontSize: '24px',
+                    textOutline: '2px'
+                }
+            }
+        },
+         { // Light breeze
+            from: 301,
+            to: 1000,
+            color: 'magenta',
+            label: {
+                text: 'Опасно',
+                style: {
+                    color: '#000000',
+                    fontSize: '24px',
+                    textOutline: '2px'
+                }
+            }
+        }
+        ]
 	        },
-	        series: []
+	         plotOptions: {
+  spline: {
+  lineColor: 'orange',
+   lineWidth: 2,
+            states: {
+                hover: {
+                    lineWidth: 3
+                }
+            },
+            marker: {
+                enabled: false
+            }
+   
+  }
+},
+	        series: [],
+	         navigation: {
+        menuItemStyle: {
+            fontSize: '10px'
+        }}
 	    });        
 	});
 
@@ -281,6 +338,7 @@ public broker and topic you can use for testing.
 <div class="container">
   <!-- Trigger the modal with a button --><br>
   <button type="button" class="btn btn-info btn-lg" data-toggle="modal" data-target="#myModal">Инфо</button>
+
 
   <!-- Modal -->
   <div class="modal fade" id="myModal" role="dialog">
@@ -357,8 +415,6 @@ public broker and topic you can use for testing.
 <div id="container" style="height: 500px; min-width: 500px">
 
 
-</div><!-- this the placeholder for the chart-->
-
-
+</div>
 	</body>
 </html>
